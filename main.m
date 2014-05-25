@@ -8,6 +8,10 @@ audioFilePath = '/Users/esthervasiete/Dropbox/Computational musicology/audioFile
 
 %%
 kNN = 50;
-accuracy = KNN_LOSOCV(feat, y, songList, songID, kNN);
-numTrees = 100;
-accuracy = RF_LOSOCV(feat, y, songList, songID, numTrees);
+%accuracy = KNN_LOSOCV(feat, y, songList, songID, kNN);
+numTrees = 200;
+%accuracy = RF_LOSOCV(feat, y, songList, songID, numTrees);
+accuracy = LR_LOSOCV(feat, y, songList, songID);
+
+%ideas ... kernelize? more songs! polyfeatures? multiSVM, different step
+%and win sizes, add more st features with chroma toolbox

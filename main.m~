@@ -12,3 +12,5 @@ kNN = 50;
 numTrees = 200;
 %accuracy = RF_LOSOCV(feat, y, songList, songID, numTrees);
 accuracy = LR_LOSOCV(feat, y, songList, songID);
+
+%ideas ... kernelize? more 
