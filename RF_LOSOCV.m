@@ -21,9 +21,6 @@ for k=1:length(songList)
     norm_feat(find(isnan(norm_feat))) = 0;
     % Random Forest classifier 
     b = TreeBagger(numTrees,norm_feat(train,:),y(train),'SampleWithReplacement','off','NVarToSample',30);
-    view(b.Trees{1})
-    view(b.Trees{2})
-    view(b.Trees{3})
     y_predict = predict(b,norm_feat(fair_test,:));
     for i = 1: length(y_predict)
         predicted(i) = str2num(y_predict{i});
