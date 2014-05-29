@@ -9,7 +9,7 @@ for i = 2: 255214 %length(M)
     temp = strsplit(M{i},',');
     if ~isempty(find(songList == str2num(temp{1}))) 
         nSamples = nSamples + 1;
-        d(nSamples,:) = [temp(1) temp(2) temp(8) temp(11)];
+        d(nSamples,:) = [temp(1) temp(2) temp(8) temp(12)];
     end
 end 
 
@@ -23,7 +23,11 @@ for i = 1: nSamples
                 cSamples = cSamples + 1;
                 data(cSamples,:) = [str2num(cell2mat(d(i,1))) str2num(cell2mat(d(i,2))) str2num(cell2mat(d(i+1,2))) str2num(cell2mat(d(i,3)))];
                 if strcmp(d(i,4),'min') == 1
-                    data(cSamples,4) = data(cSamples,4) + 1;    
+                    if data(cSamples,4) == 4 %% it's Emin --> 13
+                        data(cSamples,4) = 13;
+                    else
+                        data(cSamples,4) = data(cSamples,4) + 1;    
+                    end
                 end
             end
         end

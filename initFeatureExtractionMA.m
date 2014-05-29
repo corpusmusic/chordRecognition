@@ -1,9 +1,10 @@
-function c = initFeatureExtraction(dummy)
+function c = initFeatureExtractionMA(dummy)
+
 
 %% CONSTANTS FOR FEATURE EXTRACTION
 
 num_ceps_coeffs = 20;
-c.fs = 22050;
+c.fs = 44100;
 c.num_filt = 36; %% number of Mel frequency bands
 c.seg_size = 512; %% 23ms if c.fs == 22050Hz
 c.hop_size = 512;

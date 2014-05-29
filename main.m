@@ -1,17 +1,16 @@
 clear all;
-filename = '/Users/esthervasiete/Dropbox/Computational musicology/chordRecognition/all_chords.csv';
+% change filename path!!
+filename = '/Users/Dropbox/Computational musicology/chordRecognition/all_chords.csv';
+audioFilePath = '/Users/Dropbox/Computational musicology/audioFiles/';
 songList = [61 473 525 681 727 852 945];
 songListData = getData(filename, songList);
-%%
-audioFilePath = '/Users/esthervasiete/Dropbox/Computational musicology/audioFiles/';
-[feat y songID] = getFeatures(audioFilePath, songListData, songList);
+[featAAL featMAT featCT y songID] = getFeatures(audioFilePath, songListData, songList);
 
-%%
-kNN = 50;
-%accuracy = KNN_LOSOCV(feat, y, songList, songID, kNN);
+kNN = 20;
+accuracyKNN = KNN_LOSOCV([featAAL featCT], y, songList, songID, kNN);
+
 numTrees = 200;
-%accuracy = RF_LOSOCV(feat, y, songList, songID, numTrees);
-accuracy = LR_LOSOCV(feat, y, songList, songID);
+accuracyRF = RF_LOSOCV([featAAL featCT], y, songList, songID, numTrees);
 
-%ideas ... kernelize? more songs! polyfeatures? multiSVM, different step
-%and win sizes, add more st features with chroma toolbox
+hiddenLayerSize = 300;
+accuracyNN600 = NN_LOSOCV([featAAL featCT], y, songList, songID, hiddenLayerSize);

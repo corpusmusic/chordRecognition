@@ -1,4 +1,4 @@
-function feat = FeatureExtraction(audio_signal, c)
+function feat = featureExtractionMA(audio_signal, c)
 %%
 %%         G1C, implementation as described in thesis
 %%         for mirex, "music audio search" (was audio music similarity)
@@ -8,6 +8,7 @@ function feat = FeatureExtraction(audio_signal, c)
 %% audio_signal: audio signal to extract features from
 %%          all files are 22050Hz mono wav 
 
+feat = [];
 wav = audio_signal' * (10^(96/20)); %% Why??
 
 %% compute P
@@ -57,19 +58,19 @@ if 1, %% compute FP
         fp(k,:) = X3(:)';
         idx = idx + 64;
     end
-
-    feat.fp = median(fp,1);
+    fp = median(fp,1);
+    feat = [feat fp];
 end
 
-tmp = reshape(feat.fp,12,30);
-feat.fpg = sum(sum(tmp,1).*(1:30))/max(sum(tmp(:)),eps);
-feat.fp_bass = sum(sum(tmp(1:2,3:30))); %% modulation > 1Hz
+tmp = reshape(fp,12,30);
+fpg = sum(sum(tmp,1).*(1:30))/max(sum(tmp(:)),eps);
+feat(end + 1) = fpg;
+fp_bass = sum(sum(tmp(1:2,3:30))); %% modulation > 1Hz
+feat(end + 1) = fp_bass;
 
 mfcc = c.DCT * M;
 mfcc = mfcc(2:20,:);
-feat.g1.m = mean(mfcc,2);
-feat.g1.co = cov(mfcc');
-feat.g1.ico = pinv(squeeze(feat.g1.co));
-feat.g1c.max_ico = max(feat.g1.ico);
+feat = [feat mean(mfcc,2)'];
+feat = [feat max(pinv(squeeze(cov(mfcc'))))];
 
 
